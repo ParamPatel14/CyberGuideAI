@@ -1,0 +1,722 @@
+openapi: 3.1.0
+info:
+  # Do not change the title, if the title changes, the import paths will be broken
+  title: Api
+  version: 0.1.0
+  description: CyberGuide AI - Cybersecurity Assistance API
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: fraud
+    description: Fraud analysis and reporting
+  - name: guidance
+    description: AI guidance and recommendations
+  - name: recovery
+    description: Recovery probability estimation
+  - name: documents
+    description: Document checklist generation
+  - name: complaint
+    description: Complaint draft generation
+  - name: ocr
+    description: OCR evidence scanning
+  - name: awareness
+    description: Scam awareness dashboard data
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      description: Returns server health status
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+
+  /analyze:
+    post:
+      operationId: analyzeFraud
+      tags: [fraud]
+      summary: Analyze a fraud report
+      description: Analyzes a fraud incident and returns classification, severity, risk indicators, and guidance
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FraudReportInput"
+      responses:
+        "200":
+          description: Analysis result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FraudAnalysis"
+        "400":
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+
+  /guidance:
+    post:
+      operationId: getGuidance
+      tags: [guidance]
+      summary: Get emergency guidance
+      description: Returns step-by-step emergency actions and timeline roadmap for a fraud type
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GuidanceInput"
+      responses:
+        "200":
+          description: Guidance result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GuidanceResult"
+        "400":
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+
+  /recovery:
+    post:
+      operationId: estimateRecovery
+      tags: [recovery]
+      summary: Estimate recovery probability
+      description: Returns recovery probability percentage, urgency level, and explanation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RecoveryInput"
+      responses:
+        "200":
+          description: Recovery estimate
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecoveryResult"
+        "400":
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+
+  /documents:
+    post:
+      operationId: getDocumentChecklist
+      tags: [documents]
+      summary: Get document checklist
+      description: Returns a dynamic evidence checklist based on fraud type
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DocumentChecklistInput"
+      responses:
+        "200":
+          description: Document checklist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DocumentChecklistResult"
+        "400":
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+
+  /complaint:
+    post:
+      operationId: generateComplaint
+      tags: [complaint]
+      summary: Generate complaint drafts
+      description: Generates FIR, bank complaint, and cybercrime complaint drafts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ComplaintInput"
+      responses:
+        "200":
+          description: Complaint drafts
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ComplaintResult"
+        "400":
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+
+  /ocr:
+    post:
+      operationId: scanEvidence
+      tags: [ocr]
+      summary: Scan evidence screenshot
+      description: Extracts transaction IDs, bank names, timestamps, and amounts from uploaded screenshots
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OcrInput"
+      responses:
+        "200":
+          description: OCR scan result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OcrResult"
+        "400":
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+
+  /awareness:
+    get:
+      operationId: getAwarenessData
+      tags: [awareness]
+      summary: Get scam awareness dashboard data
+      description: Returns trending scams, categories, statistics, and prevention tips
+      responses:
+        "200":
+          description: Awareness data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AwarenessData"
+
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+
+    ApiError:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
+
+    FraudReportInput:
+      type: object
+      required:
+        - fraudType
+        - description
+      properties:
+        fraudType:
+          type: string
+          description: Type of fraud (e.g., UPI Fraud, Phishing, Investment Scam)
+        amountLost:
+          type: ["number", "null"]
+        transactionMethod:
+          type: ["string", "null"]
+        incidentDate:
+          type: ["string", "null"]
+        bankName:
+          type: ["string", "null"]
+        upiId:
+          type: ["string", "null"]
+        phoneNumber:
+          type: ["string", "null"]
+        description:
+          type: string
+        hoursElapsed:
+          type: ["number", "null"]
+          description: Hours elapsed since the fraud occurred
+
+    FraudAnalysis:
+      type: object
+      required:
+        - fraudClassification
+        - severityLevel
+        - riskIndicators
+        - recoveryProbability
+        - emergencyActions
+        - preventionAdvice
+        - warnings
+      properties:
+        fraudClassification:
+          type: string
+        severityLevel:
+          type: string
+          enum: [LOW, MEDIUM, HIGH, CRITICAL]
+        riskIndicators:
+          type: array
+          items:
+            type: string
+        recoveryProbability:
+          type: number
+        emergencyActions:
+          type: array
+          items:
+            $ref: "#/components/schemas/ActionStep"
+        timelineRoadmap:
+          type: array
+          items:
+            $ref: "#/components/schemas/TimelineStep"
+        preventionAdvice:
+          type: array
+          items:
+            type: string
+        warnings:
+          type: array
+          items:
+            type: string
+        aiGuidance:
+          type: string
+
+    ActionStep:
+      type: object
+      required:
+        - order
+        - title
+        - description
+        - urgency
+      properties:
+        order:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+        urgency:
+          type: string
+          enum: [IMMEDIATE, HIGH, MEDIUM, LOW]
+        helpline:
+          type: ["string", "null"]
+
+    TimelineStep:
+      type: object
+      required:
+        - timeframe
+        - action
+        - status
+      properties:
+        timeframe:
+          type: string
+        action:
+          type: string
+        status:
+          type: string
+          enum: [PENDING, IN_PROGRESS, COMPLETED]
+
+    GuidanceInput:
+      type: object
+      required:
+        - fraudType
+      properties:
+        fraudType:
+          type: string
+        amountLost:
+          type: ["number", "null"]
+        hoursElapsed:
+          type: ["number", "null"]
+
+    GuidanceResult:
+      type: object
+      required:
+        - emergencySteps
+        - helplines
+        - nextSteps
+      properties:
+        emergencySteps:
+          type: array
+          items:
+            $ref: "#/components/schemas/ActionStep"
+        helplines:
+          type: array
+          items:
+            $ref: "#/components/schemas/Helpline"
+        nextSteps:
+          type: array
+          items:
+            type: string
+        importantWarnings:
+          type: array
+          items:
+            type: string
+
+    Helpline:
+      type: object
+      required:
+        - name
+        - number
+        - availability
+      properties:
+        name:
+          type: string
+        number:
+          type: string
+        availability:
+          type: string
+        description:
+          type: string
+
+    RecoveryInput:
+      type: object
+      required:
+        - fraudType
+        - hoursElapsed
+        - paymentMethod
+      properties:
+        fraudType:
+          type: string
+        hoursElapsed:
+          type: number
+        paymentMethod:
+          type: string
+        amountLost:
+          type: ["number", "null"]
+        reportedToBank:
+          type: boolean
+        reportedToPolice:
+          type: boolean
+
+    RecoveryResult:
+      type: object
+      required:
+        - probability
+        - urgencyLevel
+        - explanation
+        - factors
+      properties:
+        probability:
+          type: number
+          description: Recovery probability 0-100
+        urgencyLevel:
+          type: string
+          enum: [CRITICAL, HIGH, MEDIUM, LOW]
+        explanation:
+          type: string
+        factors:
+          type: array
+          items:
+            $ref: "#/components/schemas/RecoveryFactor"
+        recommendations:
+          type: array
+          items:
+            type: string
+
+    RecoveryFactor:
+      type: object
+      required:
+        - factor
+        - impact
+        - description
+      properties:
+        factor:
+          type: string
+        impact:
+          type: string
+          enum: [POSITIVE, NEGATIVE, NEUTRAL]
+        description:
+          type: string
+
+    DocumentChecklistInput:
+      type: object
+      required:
+        - fraudType
+      properties:
+        fraudType:
+          type: string
+        transactionMethod:
+          type: ["string", "null"]
+
+    DocumentChecklistResult:
+      type: object
+      required:
+        - fraudType
+        - checklist
+        - priorityDocuments
+      properties:
+        fraudType:
+          type: string
+        checklist:
+          type: array
+          items:
+            $ref: "#/components/schemas/ChecklistItem"
+        priorityDocuments:
+          type: array
+          items:
+            type: string
+        additionalNotes:
+          type: string
+
+    ChecklistItem:
+      type: object
+      required:
+        - id
+        - title
+        - description
+        - required
+        - category
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        required:
+          type: boolean
+        category:
+          type: string
+          enum: [FINANCIAL, DIGITAL, IDENTITY, COMMUNICATION, LEGAL]
+        tips:
+          type: ["string", "null"]
+
+    ComplaintInput:
+      type: object
+      required:
+        - fraudType
+        - victimName
+        - description
+      properties:
+        fraudType:
+          type: string
+        victimName:
+          type: string
+        victimAddress:
+          type: ["string", "null"]
+        victimPhone:
+          type: ["string", "null"]
+        incidentDate:
+          type: ["string", "null"]
+        amountLost:
+          type: ["number", "null"]
+        bankName:
+          type: ["string", "null"]
+        transactionId:
+          type: ["string", "null"]
+        description:
+          type: string
+
+    ComplaintResult:
+      type: object
+      required:
+        - firDraft
+        - bankComplaintDraft
+        - cybercrimeComplaintDraft
+      properties:
+        firDraft:
+          type: string
+        bankComplaintDraft:
+          type: string
+        cybercrimeComplaintDraft:
+          type: string
+
+    OcrInput:
+      type: object
+      required:
+        - imageBase64
+      properties:
+        imageBase64:
+          type: string
+          description: Base64-encoded image data
+
+    OcrResult:
+      type: object
+      required:
+        - extractedText
+        - detectedEntities
+        - confidence
+      properties:
+        extractedText:
+          type: string
+        detectedEntities:
+          $ref: "#/components/schemas/DetectedEntities"
+        confidence:
+          type: number
+        rawText:
+          type: string
+
+    DetectedEntities:
+      type: object
+      properties:
+        transactionIds:
+          type: array
+          items:
+            type: string
+        bankNames:
+          type: array
+          items:
+            type: string
+        amounts:
+          type: array
+          items:
+            type: string
+        timestamps:
+          type: array
+          items:
+            type: string
+        upiIds:
+          type: array
+          items:
+            type: string
+        phoneNumbers:
+          type: array
+          items:
+            type: string
+
+    AwarenessData:
+      type: object
+      required:
+        - trendingScams
+        - categories
+        - statistics
+        - preventionTips
+        - alertCards
+      properties:
+        trendingScams:
+          type: array
+          items:
+            $ref: "#/components/schemas/TrendingScam"
+        categories:
+          type: array
+          items:
+            $ref: "#/components/schemas/ScamCategory"
+        statistics:
+          $ref: "#/components/schemas/FraudStatistics"
+        preventionTips:
+          type: array
+          items:
+            $ref: "#/components/schemas/PreventionTip"
+        alertCards:
+          type: array
+          items:
+            $ref: "#/components/schemas/AlertCard"
+
+    TrendingScam:
+      type: object
+      required:
+        - name
+        - description
+        - riskLevel
+        - reportedCases
+        - trend
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        riskLevel:
+          type: string
+          enum: [LOW, MEDIUM, HIGH, CRITICAL]
+        reportedCases:
+          type: integer
+        trend:
+          type: string
+          enum: [RISING, STABLE, DECLINING]
+        targetGroup:
+          type: string
+
+    ScamCategory:
+      type: object
+      required:
+        - id
+        - name
+        - count
+        - percentage
+        - color
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        count:
+          type: integer
+        percentage:
+          type: number
+        color:
+          type: string
+
+    FraudStatistics:
+      type: object
+      required:
+        - totalCasesReported
+        - totalAmountLost
+        - recoveryRate
+        - mostCommonFraudType
+        - averageAmountLost
+        - casesThisMonth
+      properties:
+        totalCasesReported:
+          type: integer
+        totalAmountLost:
+          type: number
+        recoveryRate:
+          type: number
+        mostCommonFraudType:
+          type: string
+        averageAmountLost:
+          type: number
+        casesThisMonth:
+          type: integer
+
+    PreventionTip:
+      type: object
+      required:
+        - id
+        - title
+        - description
+        - category
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+
+    AlertCard:
+      type: object
+      required:
+        - id
+        - title
+        - message
+        - severity
+        - date
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        message:
+          type: string
+        severity:
+          type: string
+          enum: [INFO, WARNING, DANGER, CRITICAL]
+        date:
+          type: string
