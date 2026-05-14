@@ -1,0 +1,303 @@
+Build a production-grade full-stack AI-powered cybersecurity assistance web application named “CyberGuide AI”.
+
+Tech Stack:
+- Frontend: React + Vite + Tailwind CSS
+- Backend: Python FastAPI
+- Frontend Routing: React Router
+- API Communication: Axios
+- Icons: lucide-react
+- Animations: Framer Motion
+- OCR Support: EasyOCR
+- AI Integration Ready: OpenAI/Gemini compatible architecture
+- No database for now
+- No authentication for now
+
+Application Purpose:
+CyberGuide AI helps cyber fraud victims understand what steps to take after being scammed.
+
+The application should:
+1. Allow users to report cyber fraud incidents
+2. Analyze fraud reports using AI-ready architecture
+3. Generate emergency response steps
+4. Generate cybercrime complaint guidance
+5. Generate document/evidence checklist
+6. Estimate recovery probability
+7. Generate FIR and bank complaint drafts
+8. Extract information from uploaded screenshots using OCR
+9. Display scam awareness dashboard
+10. Provide production-grade UI/UX
+
+IMPORTANT:
+This is NOT a simple demo app.
+Generate clean, modular, scalable, production-quality architecture.
+
+====================================
+FRONTEND REQUIREMENTS
+====================================
+
+Build a modern cybersecurity-themed UI using:
+- dark blue
+- black
+- white
+- red warning highlights
+- glassmorphism effects
+- responsive layouts
+- animated cards
+- professional dashboard design
+
+Frontend Pages:
+1. Home Page
+2. Report Fraud Page
+3. AI Analysis Dashboard
+4. Emergency Actions Page
+5. Document Checklist Page
+6. Complaint Generator Page
+7. OCR Evidence Scanner Page
+8. Scam Awareness Dashboard
+9. About Page
+
+====================================
+HOME PAGE REQUIREMENTS
+====================================
+
+Include:
+- Hero section
+- “Report Fraud Now” CTA
+- Scam statistics cards
+- Fraud category cards
+- Emergency cyber helpline banner
+- Professional animations
+- Responsive design
+
+====================================
+REPORT FRAUD PAGE REQUIREMENTS
+====================================
+
+Create a production-grade multi-step fraud reporting form.
+
+Fields:
+- Fraud type dropdown
+- Amount lost
+- Transaction method
+- Incident date/time
+- Bank name
+- UPI ID
+- Phone number
+- Scam description
+- Evidence upload
+- Screenshot upload
+
+Features:
+- Form validation
+- Error handling
+- Loading states
+- Progress bar
+- Drag-and-drop upload
+- Clean UI
+
+====================================
+AI ANALYSIS DASHBOARD REQUIREMENTS
+====================================
+
+Display:
+- Fraud classification
+- Severity level
+- Risk indicators
+- Recovery probability
+- AI-generated guidance
+- Emergency actions
+- Timeline roadmap
+- Warning alerts
+- Prevention advice
+
+Use:
+- animated cards
+- progress indicators
+- modern dashboard UI
+
+====================================
+RECOVERY PREDICTION ENGINE
+====================================
+
+Create a rule-based recovery probability engine.
+
+Logic factors:
+- Time since fraud
+- Payment method
+- Fraud type
+- Amount lost
+- Whether reported quickly
+
+Generate:
+- Recovery percentage
+- Explanation
+- Urgency level
+
+====================================
+DOCUMENT CHECKLIST ENGINE
+====================================
+
+Generate dynamic evidence checklist based on fraud type.
+
+Examples:
+UPI Fraud:
+- UTR number
+- Bank statement
+- Screenshot
+- Complaint ID
+
+Instagram Account Hack:
+- Username
+- Device details
+- Email
+- Screenshot evidence
+
+====================================
+COMPLAINT GENERATOR
+====================================
+
+Generate:
+- FIR complaint draft
+- Bank complaint letter
+- Cybercrime complaint summary
+
+Use:
+- professional formal formatting
+- editable text areas
+- copy/download buttons
+
+====================================
+OCR EVIDENCE SCANNER
+====================================
+
+Use EasyOCR to:
+- extract transaction IDs
+- detect bank names
+- extract timestamps
+- extract amounts
+- analyze screenshots
+
+====================================
+SCAM AWARENESS DASHBOARD
+====================================
+
+Display:
+- Trending scams
+- Scam categories
+- Prevention tips
+- Scam alert cards
+- Fraud awareness statistics
+
+====================================
+BACKEND REQUIREMENTS
+====================================
+
+Use FastAPI with modular architecture.
+
+Backend Structure:
+backend/
+ ├── app/
+ │   ├── routes/
+ │   ├── services/
+ │   ├── ai/
+ │   ├── utils/
+ │   ├── models/
+ │   ├── prompts/
+ │   ├── constants/
+ │   └── main.py
+
+Implement APIs:
+- POST /analyze
+- POST /guidance
+- POST /recovery
+- POST /documents
+- POST /complaint
+- POST /ocr
+
+====================================
+AI ARCHITECTURE REQUIREMENTS
+====================================
+
+Create AI-ready architecture.
+
+Include:
+- prompt templates
+- AI service layer
+- fraud classifier
+- recommendation engine
+- structured JSON responses
+- reusable prompt modules
+
+Do NOT hardcode everything into routes.
+
+====================================
+SECURITY REQUIREMENTS
+====================================
+
+Implement:
+- CORS
+- Input validation
+- File validation
+- Request validation
+- Error handling
+- Secure API structure
+
+====================================
+CODE QUALITY REQUIREMENTS
+====================================
+
+Generate:
+- clean modular code
+- reusable React components
+- reusable FastAPI services
+- production-grade folder structure
+- comments where necessary
+- proper naming conventions
+- scalable architecture
+
+====================================
+UI/UX REQUIREMENTS
+====================================
+
+Use:
+- Framer Motion animations
+- Tailwind CSS
+- Glassmorphism cards
+- Responsive mobile-first design
+- Dashboard layouts
+- Professional cybersecurity styling
+
+====================================
+IMPORTANT
+====================================
+
+Generate:
+- complete frontend
+- complete backend
+- routing
+- API integration
+- loading states
+- reusable components
+- modular architecture
+
+Do NOT generate:
+- toy code
+- placeholder-only UI
+- minimal demo implementations
+- beginner-level architecture
+
+Generate production-grade code suitable for:
+- startup MVP
+- hackathons
+- cybersecurity portfolio
+- real-world extension
+
+Also generate:
+- package installation commands
+- environment variable examples
+- API service layer
+- reusable utilities
+- complete project structure
+- README instructions
+
+Ensure frontend and backend run correctly together.

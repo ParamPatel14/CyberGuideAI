@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "CyberGuide AI"
+version = "1.0.0"
+id = "artifacts/cyberguide"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24336
+
+[services.development]
+run = "pnpm --filter @workspace/cyberguide run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/cyberguide", "run", "build" ]
+publicDir = "artifacts/cyberguide/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24336"
+BASE_PATH = "/"
